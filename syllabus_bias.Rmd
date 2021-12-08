@@ -1,0 +1,111 @@
+---
+title: "syllabus_bias"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(pdftools)
+library(tidyverse)
+library(stringr)
+```
+
+
+## R Markdown
+
+
+```{r cars}
+#making the  basic two functions
+
+#READ DIVERSITY STATEMENT
+
+read_div_statement <- function(syllabus_pdf){
+
+  #Cut it by lines
+   syllabus_l<-scan(textConnection(syllabus_pdf), what="character",sep = "\n")
+   #make it a dataframe 
+   syllabus_df<-as.data.frame(unlist(syllabus_l))
+   #change name of column
+   names(syllabus_df)[1] <- "lines"
+   #find the Diversity statement line
+   diversity_line<-grep("Diversity Statement", syllabus_df$lines)
+   #find the Grading line
+   assignment_line<- grep("Grading and Assignments", syllabus_df$lines)
+   #the diversity statement is between these tw
+   diversity_df<-syllabus_df %>%
+     slice((diversity_line+1):(assignment_line-1))
+   #take out those lines that have exactly one character 
+   diversity_df<-diversity_df %>%
+     filter(nchar(as.character(lines))!=1)
+   #create a string
+   div_statement<-paste(diversity_df$lines,collapse=" ")
+   div_statement<- div_statement %>%str_remove(.,"[:digit:]") %>% str_trim(.)
+   div_statement
+}
+
+#GET THE READINGS 
+
+
+get_readings <- function(syllabus_pdf){
+  
+  #Cut it by lines
+  syllabus_l<-scan(textConnection(syllabus_pdf), what="character",sep = "\n")
+  #make it a dataframe 
+  syllabus_df<-as.data.frame(unlist(syllabus_l))
+  #change name of column
+  names(syllabus_df)[1] <- "lines"
+  #find the reading and optional reading lines
+  reading_lines<- grep("Required Readings", syllabus_df$lines)
+  optional_lines<-grep("Optional Readings",syllabus_df$lines)
+  #split them into vectors
+  reading_lines_split<-str_split(reading_lines," ")
+  optional_lines_split<-str_split(optional_lines," ")
+  #make a dataframe with all the readings
+  for (i in 1:length(reading_lines_split)) {
+    slices<-syllabus_df %>%
+      slice(as.numeric(reading_lines_split[[i]]):as.numeric(optional_lines_split[[i]]))
+    
+    if (i==1) {
+      readings_df<-rbind(slices)
+    } else {
+      readings_df<-rbind(readings_df,slices)
+    }
+    
+  }
+  
+  #delete optional reading line
+  readings_df<-readings_df %>%
+    filter(!str_detect(lines,"Optional Readings"))
+  readings_df<-readings_df %>%
+    mutate(lines=str_replace_all(lines,"Required Readings","")) %>%
+    mutate(lines=str_trim(lines))
+  #take out those lines that have exactly one character 
+  readings_df<-readings_df %>%
+   filter(nchar(as.character(lines))!=1)
+  
+  #create a string
+  readings_str<-paste(readings_df$lines,collapse=" ")
+  readings_str
+  
+}
+
+
+
+```
+
+
+```{r pressure, echo=FALSE}
+
+#setwd("~/Documents/Maestria/2021-II/Intro Data Science/Final Project")
+#reading_files
+
+syllabi_pdf<-c("Bauer")
+
+list.files("./")
+
+```
+
+
