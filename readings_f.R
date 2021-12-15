@@ -66,21 +66,34 @@ percentage_female<-function(reading_names) {
   
   list_names<-reading_names$name_name
   
+  list_names<-list_names %>%
+    str_remove(.,"[:punct:]")%>%
+    str_trim(.)
+  
   count_a<-gender(list_names)%>%
     group_by(gender) %>%
     summarise(n=n()/nrow(.))
   
-  result<-unlist(count_a[2,2])
+  if (nrow(count_a)==2) {
+    result<-unlist(count_a[1,2])
+  }else{
+   result<-0
+    }
+  
+  
   result
 }
 
 
+#count_a<-gender(reading_list_parrado$name_name)%>%
+#  group_by(gender) %>%
+#  summarise(n=n()/nrow(.))
 
 
 #reading the database and breaking it
 
 
-complete_df<-readr::read_csv("div_statements_complete.csv")
+complete_df<-readr::read_csv("div_stats_last.csv")
 
 complete_df<-complete_df %>%
   mutate(sep_read_1=str_split(Readings_1,";"))
@@ -126,6 +139,7 @@ complete_df<-complete_df %>%
 readings_bauer<-split_readings(complete_df,1)
 reading_list_bauer<-split_names(readings_bauer)
 
+
 readings_ahrens<-split_readings(complete_df,2)
 reading_list_ahrens<-split_names(readings_ahrens)
 
@@ -156,7 +170,7 @@ reading_list_wucher<-split_names(readings_wucher)
 
 
 readings_dkt<-split_readings(complete_df,11) #this is missing
-
+reading_list_dkt<-split_names(readings_dkt)
 
 readings_hassel<-split_readings(complete_df,12)
 reading_list_hassel<-split_names(readings_hassel)
@@ -190,6 +204,87 @@ reading_list_munzert<-split_names(readings_munzert)
 
 bauer_female<-percentage_female(reading_list_bauer)
 
+ahrens_female<-percentage_female(reading_list_ahrens)
+
+costello_female<-percentage_female(reading_list_costello)
+gruener_female<-percentage_female(reading_list_gruener)
+
+lancker_female<-reading_list_lancker%>%
+  percentage_female(.)
+
+patz_female<-patz_female<-reading_list_patz%>%
+  percentage_female(.)
+
+jacthen_female<-reading_list_jachten%>%
+  percentage_female(.)
+
+costello_female<-reading_list_costello%>%
+  percentage_female(.)
+
+bosch_female<-reading_list_bosch%>%
+  percentage_female(.)
+
+bobic_female<-reading_list_bobic%>%
+  percentage_female(.)
+
+wucher_female<-reading_list_wucher%>%
+  percentage_female(.)
+
+dkt_female<-reading_list_dkt%>%
+  percentage_female(.)
+
+hassel_female<-reading_list_hassel%>%
+  percentage_female(.)
+
+hickman_female<-reading_list_hickman%>%
+  percentage_female(.)
+
+graf_female<-reading_list_graf%>%
+  percentage_female(.)
+
+migliorati_female<-reading_list_migliorati%>%
+  percentage_female(.)
+
+hustedt_female<-reading_list_hustedt%>%
+  percentage_female(.)
+
+parrado_female<-reading_list_parrado%>%
+  percentage_female(.)
+
+wegrich_female<-reading_list_wegrich%>%
+  percentage_female(.)
+
+kayser_female<-reading_list_kayser%>%
+  percentage_female(.)
+
+munzert_female<-reading_list_munzert%>%
+  percentage_female(.)
+
+
+
+
+classes_1<-c("Bauer_internationalorganizations.pdf","econIIeconomiccrises_Ahrens.pdf",
+             "econIIfinmarketpolicy_Gruener.pdf","econIIsustainability_Lancker.pdf",
+             "globalgov_Patz_Rev.pdf","globalgoveu_Jachtenfuchs.pdf",
+             "international_law_CaliCostello.pdf",
+             "introduction_to_economics_Bosch-Rosa.pdf",
+             "lawgovernanceruleoflawcrisis_Bobic.pdf",
+             "NOinternationalsecurity_Gohdes_Wucherpfennig.pdf",
+             "NOlawgov_Dawson-Kurban-Thielborger.pdf","policyprocess_welfareemployment_Hassel.pdf",
+             "policyprocessclimate_Hickmann_Fuhr.pdf","policyprocesseduclaborecon_Graf.pdf",
+             "policyprocesseu_Migliorati.pdf","public_mgmt_hustedt.pdf","public_mgmt_Parrado.pdf",
+             "public_mgmt_Wegrich.pdf","statistics1_Kayser.pdf","statisticsII_Munzert.pdf")
+
+
+female_list<-c(bauer_female,ahrens_female,gruener_female,lancker_female,patz_female,
+            jacthen_female,costello_female,bosch_female,bobic_female,wucher_female,
+            dkt_female,hassel_female,hickman_female,graf_female,migliorati_female,
+            hustedt_female,parrado_female,wegrich_female,kayser_female,munzert_female)
+
+
+female_df<-data.frame(classes_1,female_list)
+
+write.csv(female_df,"female_percentage.csv")
 
 #count_a<-gender(reading_list_bauer$name_name)%>%
 #  group_by(gender) %>%
@@ -198,4 +293,99 @@ bauer_female<-percentage_female(reading_list_bauer)
 #group_by(observation_y_n) %>%
 #  summarise(n=n()) %>%
 
+#s<- "Charles,"
+
+#s<-s %>%
+ # str_remove(.,"[:punct:]")%>%
+#  str_trim(.)
+
+
+trial<-"Jänicke, Martin; Schreurs, Miranda; Töpfer, Klaus (2015)"
+a<-str_split(trial,"[(]")
+string_names_final<-a[[1]][1] %>%
+  str_trim(.)
+
+no_words<-str_count(string_names_final,'\\w+')
+
+for (i in seq(from=1, to=no_words,by=2)) {
+  
+  a<-word(string_names_final,i) %>%
+    str_remove(.,"[:punct:]") %>%
+    str_trim(.)
+  
+  b<-word(string_names_final,i+1) %>%
+    str_remove(.,"[:punct:]")%>%
+    str_trim(.)
+  
+  names_df<-data.frame(a,b)
+  names(names_df)[1]<-"last_name"
+  names(names_df)[2]<-"name_name"
+  
+  if (i==1) { 
+    final_names_df<-rbind(names_df)
+  }else{
+    final_names_df<-rbind(final_names_df,names_df)
+  }  
+  
+}
+
+
+detect_authors<-function(trial) {
+  
+  
+  a<-str_split(trial,"[(]")
+  string_names_final<-a[[1]][1] %>%
+    str_trim(.)
+  
+  no_words<-str_count(string_names_final,'\\w+')
+  
+  for (i in seq(from=1, to=no_words,by=2)) {
+    
+    a<-word(string_names_final,i) %>%
+      str_remove(.,"[:punct:]") %>%
+      str_trim(.)
+    
+    b<-word(string_names_final,i+1) %>%
+      str_remove(.,"[:punct:]")%>%
+      str_trim(.)
+    
+    names_df<-data.frame(a,b)
+    names(names_df)[1]<-"last_name"
+    names(names_df)[2]<-"name_name"
+    
+    if (i==1) { 
+      final_names_df<-rbind(names_df)
+    }else{
+      final_names_df<-rbind(final_names_df,names_df)
+    }  
+    
+  }
+  
+  final_names_df
+  
+}
+
+split_names_b<-function(readings_l){
+  
+  for (i in 1:nrow(readings_l)) {
+  
+    string_names<-readings_l[i,1]
+    
+    if (is.na(string_names)){
+      string_names<-"NULL, NULL(2021)"
+        }
+    
+    names_df<-detect_authors(string_names)
+    
+    
+    
+    if (i==1) { 
+      final_names_df<-rbind(names_df)
+    }else{
+      final_names_df<-rbind(final_names_df,names_df)
+    }  
+  }
+  
+  final_names_df
+}
 
