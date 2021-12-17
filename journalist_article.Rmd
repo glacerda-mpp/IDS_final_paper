@@ -1,0 +1,40 @@
+---
+title: "Data Science Final Project"
+author: "Rodrigo Bolaños, Eduardo Campbell and Guilherme Lacerda"
+output:
+  html_document:
+    theme: cerulean
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rmdformats)
+```
+
+
+## Introduction: 
+
+In the last couple of years, the Hertie School publicly expressed its commitment towards diversity and inclusion. This was exemplified by creation of the Diversity and Inclusion Task Force 2019 that aimed to identify general strategic objectives for the school, including definitions of equality, diversity and inclusion; identify action and issue-area specific goals; and recommend measures to achieve the goals identified. Despite these efforts, the university faced internal and external criticism and outrage sparked by an article posted by a professor that compared BLM protestors removing statues to barbarians. As a result, students expressed their discontent not only by the article published but also due to the lack of diversity and inclusion at the university. According to Karim Fereidooni, a professor at the Ruhr-University in Bochum who focuses on critical race theory in education, “German universities need to employ more people who are familiar with racism, and they need to do more to hire a diverse workforce.”
+
+Even though issues related to racism are far from being solved at the university, the Hertie School has made clear efforts on other areas of diversity and inclusion. To ameliorate gender gaps in higher education, the faculty body pledged to not to participate in “men-only” panels; and a commitment to host more inclusive events at the Hertie School. Moreover, there is a strategy to recruit more women in faculty, and soon the university will officially appoint its first female president Dr. Cornelia Woll. 
+
+As noted, the Hertie School is committed to improve its diversity and inclusion strategy, especially regarding gender equality and equity. Nevertheless, these commitments seem to be mostly administrative and little is known about the outcomes of such efforts on the student body. Consequently, a core course audit was conducted by three Master’s of Public Policy students in order to figure out some diversity and inclusion indicators on the course syllabi. 
+
+The main question that these students aimed to explore on the course audit was: how is diversity and inclusion fostered on the course syllabus? 
+
+
+## Methodology and Data Collection
+
+## Motivation and Relevance 
+
+Diversity and inclusion is a phrase that has gained increasing popularity among the Hertie Administration and higher education institutions as a whole. However, it is often referred to as an abstract concept or value that ìs part of the university experience without clear metrics on how to increase, implement and strengthen policies that aim to foster such value. While it is true that the university leadership is committed to ameliorate the experiences of students regarding diversity and inclusion, there is often a disconnect if that commitment is translating to the daily lives of students at the university. For that reason, students conducted a research project to investigate how diversity and inclusion is cultivated and strengthened on the courses’ syllabi. 
+
+While diversity and inclusion has become a trendy topic among several organizations, its importance is crucial when training policy makers. Hertie as a policy school must guarantee an integral training in policy making, meaning that it should actively promote an intersectional diversity and inclusion approach to its teaching curricula. 
+
+## Finding and Analysis
+
+(code)
+
+## Policy Recommendations 
+
+
+
