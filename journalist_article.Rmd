@@ -8,10 +8,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-
-pacman::p_load(rmdformats, tidyverse, stringr,pdftools) #add here the libraries you are using
-
-
+pacman::p_load(rmdformats, tidyverse, stringr, pdftools, gender, ggplot2, quanteda.sentiment, quanteda, tidyr, gridExtra, tm, gender) #add here the libraries you are using
 ```
 
 
@@ -154,10 +151,16 @@ div_statement_df<-data.frame(unlist(list_syllabi),unlist(a))
 
 ```{r getting-readings}
 
-#the ideal here would be to merge 
+## Integrating diversity statement scrapping data frame to second data frame with courses' basic and readings information 
 
+gathered_courses_data_vf <- read_csv("gathered_courses_data_vf.csv") ## uploading gathered information about Professors and readings
 
-complete_df<-readr::read_csv("div_stats_last.csv")
+complete_df <- div_statement_df %>%  ## Including key column for left join
+  mutate(observation = 1:n())
+
+complete_df <- dplyr::left_join(complete_df, gathered_courses_data_vf, by = "observation") ## Left joining information to complete data frame
+
+## complete_df<-readr::read_csv("div_stats_last.csv") ## Delete before turning in
 
 complete_df<-complete_df %>%
   mutate(sep_read_1=str_split(Readings_1,";"))
@@ -372,9 +375,311 @@ While diversity and inclusion has become a trendy topic among several organizati
 
 ## Finding and Analysis
 
-(code)
+```{r analysis}
+## 1. Duplicating data frame and reorganizing for analysis purposes
+
+analysis_df <- complete_df
+
+analysis_df[16, "Key"] <- "GRAD-C3H" # Differentiating GRAD-C3 keys (same course, different Professors)
+analysis_df[17, "Key"] <- "GRAD-C3P" # Differentiating GRAD-C3 keys (same course, different Professors)
+analysis_df[18, "Key"] <- "GRAD-C3W" # Differentiating GRAD-C3 keys (same course, different Professors)
+
+analysis_df <- analysis_df[-c(10,11), ] # Removing classes taught jointly by both male and female Professor
+
+vec_word_count <- sapply(strsplit(analysis_df$unlist.a., " "), length) # Creating vector with diversity statement word count
+analysis_df$word_count <- vec_word_count  # Including vector in data frame
+
+
+## 2. Plotting relationships
+
+## 2.1 Average length of diversity statement
+
+# Plot about average length of diversity statement according to Prof gender
+ave_count_gender_plot <- ggplot(data = analysis_df, aes(x = Gender, y = word_count, fill = Gender)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(title = "Average Length of Diversity Statement",
+       subtitle = "Comparison Between Professors' Gender",
+       x = "Grouping of Professors  \n by Gender",
+       y = "Length of Statement (Words)") +
+  scale_fill_manual(values = c("Female" = "#a52a2a", "Male" = "#2aa5a5")) +
+  theme(axis.text.x=element_blank(), legend.position="bottom",
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  theme_minimal() +
+  coord_cartesian(ylim = c(0, 90))
+
+# Plot about average length of diversity statement according to Prof research method
+ave_count_method_plot <- ggplot(data = analysis_df, aes(x = Method, y = word_count, fill = Method)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(title = "Average Length of Diversity Statement",
+       subtitle = "Comparison Between Professors' Main Research Method",
+       x = "Grouping of Professors  \n by Research Method",
+       y = "Length of Statement (Words)") +
+  scale_fill_manual(values = c("Quali" = "#a0740a", "Quant" = "#0a36a0")) +
+  theme(axis.text.x=element_blank(), legend.position="bottom",
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  theme_minimal() +
+  coord_cartesian(ylim = c(0, 90))
+
+# Plot about average length of diversity statement according to Prof field
+ave_count_field_plot <- ggplot(data = analysis_df, aes(x = Field, y = word_count, fill = Field)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(title = "Average Length of Diversity Statement",
+       subtitle = "Comparison Between Professors' Fields",
+       x = "Grouping of Professors  \n  by Field",
+       y = "Length of Statement (Words)") +
+  scale_fill_manual(values = c("STEM" = "#cd5c5c", "Social science" = "#5ccdcd")) +
+  theme(axis.text.x=element_blank(), legend.position="bottom",
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  theme_minimal() +
+  coord_cartesian(ylim = c(0, 90))
+
+# Decision: not to include "Field" as it carries the same information as "Method".
+
+# Image combining gender and method plots (average length)
+comparison_averages_plot <- grid.arrange(ave_count_gender_plot,  ## Combining plots for summary image (average length)
+                                     ave_count_method_plot,
+                                     ncol = 2)
+
+
+## 2.2 Length of diversity statement by individual course
+
+# Plot with individual course statement length filled by Gender
+count_class_gender_plot <- ggplot(data = analysis_df, aes(x = reorder(Key, word_count), y = word_count, fill = Gender)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90),
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Length of Diversity Statement",
+       subtitle = "Filling according to \nProfessors' Gender",
+       x = "Mandatory Courses",
+       y = "Length of Statement (Words)") +
+  scale_fill_manual(values = c("Female" = "#a52a2a", "Male" = "#2aa5a5")) +
+  theme_classic() +
+  coord_cartesian(ylim = c(0, 150)) +
+  theme(axis.text.x = element_text(angle = 90))
+
+# Plot with individual course statement length filled by Method
+count_class_method_plot <- ggplot(data = analysis_df, aes(x = reorder(Key, word_count), y = word_count, fill = Method)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90),
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Length of Syllabi Diversity Statement",
+       subtitle = "Filling according to \nProfessors' Main Research Method",
+       x = "Mandatory Courses",
+       y = "Length of Statement (Words)") +
+  scale_fill_manual(values = c("Quali" = "#a0740a", "Quant" = "#0a36a0")) +
+  theme_classic() +
+  coord_cartesian(ylim = c(0, 150)) +
+  theme(axis.text.x = element_text(angle = 90))
+
+# Plot with individual course statement length filled by Field - not included as carries same information as Method.
+count_class_field_plot <- ggplot(data = analysis_df, aes(x = reorder(Key, word_count), y = word_count, fill = Field)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90))
+
+# Image combining gender and method plots (individual course length)
+comparison_courses_plot <- grid.arrange(count_class_gender_plot, ## Combining plots for summary image (word count per class)
+             count_class_method_plot, ncol = 2)
+
+## 3. Applying dictionaries
+
+# 3.1 Checking Quanteda package's existing dictionary
+
+# Removing classes without diversity statement from the analysis
+dictionary_df <- analysis_df[!(analysis_df$word_count=="1"), ] # Removing classes with no diversity statement
+
+# Working with Quanteda package's valence-based sentiment dictionary
+sentiment_df <- dictionary_df$unlist.a. %>%
+  textstat_valence(dictionary = data_dictionary_AFINN) # Creating new data frame with valence-based sentiment values
+
+dictionary_df$sentiment <- sentiment_df$sentiment # Inserting sentiment column in original data frame
+
+sentiment_plot <- ggplot(data = dictionary_df, ## Plotting sentiment by class
+         aes(x = sentiment, y = reorder(Key, sentiment), color = Gender)) +
+  geom_point() +
+  ylab("")
+
+# Plot with "sentiment" by class according to Quanteda package
+# sentiment_plot      ## Decide if we're using it for analysis
+
+
+## 3.2 Creating our own diversity dictionary
+
+# Creating the diversity-specific dictionary
+dict_div <-
+  dictionary(list(
+    diversity_words = c(
+      "race", "racism", "racist", "racial", "racially",
+      "gender",
+      "ethnicity", "ethnical", "ethnically",
+      "ability", "ableism",
+      "discrimination", "discriminatory",
+      "culture", "cultural", "culturally",
+      "belief",
+      "equity",
+      "underrepresented"
+    ),
+    speech_words = c("speech",
+                     "freedom",
+                     "thought",
+                     "debate",
+                     "disagreement", "agreement",
+                     "respectful", "respecftully"),
+    practice_words = c("projects",
+                       "governments",
+                       "countries"
+  )))
+
+## 3.2.1 Analysis of the diversity dictionary weighted by diversity statement length
+
+# Creating a dfm using the dictionary above, weighting it by document length and computing the share of words of interest
+dfm_div_wgt <- dictionary_df$unlist.a. %>%
+  tokens(remove_punct = TRUE, remove_numbers = TRUE) %>%
+  dfm() %>%
+  dfm_weight(scheme = "prop") %>%
+  dfm_lookup(dict_div)
+
+# Transforming the dfm into a data frame (and tidying it up) in order to plot the findings
+div_wgt_df <- dfm_div_wgt %>%
+  convert(to = "data.frame") %>%
+  cbind(docvars(dfm_div_wgt)) %>%
+  tidyr::gather(unlist.a., share, c(diversity_words,speech_words,practice_words))
+
+## Including the courses' keys to the new data frame
+div_wgt_df$Key <- dictionary_df$Key
+
+# Plotting the findings
+div_dict_wgt_plot <- div_wgt_df %>%
+  ggplot(aes(x = Key, y = share, color = unlist.a.)) +
+  geom_point() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90),
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Share of Diversity Statement Composed by Key Words",
+       subtitle = "Filling according to \nthe Approach to Diversity",
+       y = "Share of Document",
+       x = "Mandatory courses") +
+  scale_color_manual(name = "Approaches to Diversity",
+                     labels=c(diversity_words = "Representativeness and Equity",
+                              practice_words = "Practical experience",
+                              speech_words = "Freedom of Speech"),
+                     values = palette()) +
+  coord_flip()
+
+div_dict_wgt_plot
+
+
+## 3.2.3 Analysis of the diversity dictionary based on absolute number of key word occurrences
+
+# Creating an absolute dfm using the dictionary
+dfm_div_abs <- dictionary_df$unlist.a. %>%
+  tokens(remove_punct = TRUE, remove_numbers = TRUE) %>%
+  dfm() %>%
+  dfm_lookup(dict_div)
+
+## Transforming a second dfm into a data frame (and tidying it up) in order to plot the findings
+div_abs_df <- dfm_div_abs %>%
+  convert(to = "data.frame") %>%
+  cbind(docvars(dfm_div_abs)) %>%
+  tidyr::gather(unlist.a., share, c(diversity_words,speech_words,practice_words))
+
+## Including the courses' keys to the new data frame
+div_abs_df$Key <- dictionary_df$Key
+
+# Plotting the findings
+div_dict_abs_plot <- div_abs_df %>%
+  ggplot(aes(x = Key, y = share, color = unlist.a.)) +
+  geom_point() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90),
+                      plot.subtitle = element_text(hjust = 0.5),
+                      plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Absolute # of Key Words Employed on Diversity Statement",
+       subtitle = "Filling according to \nthe Approach to Diversity",
+       y = "# of Key Words Employed (Occurrence)",
+       x = "Mandatory courses") +
+  scale_color_manual(name = "Approaches to Diversity",
+                     labels=c(diversity_words = "Representativeness and Equity",
+                              practice_words = "Practical experience",
+                              speech_words = "Freedom of Speech"),
+                     values = palette()) +
+  coord_flip()
+
+div_dict_abs_plot
+
+# Image combining gender and method plots (individual course length)
+
+comparison_diversity_plot <- grid.arrange(div_dict_abs_plot,
+                                       div_dict_wgt_plot, ncol = 1, nrow = 2)
+
+
+## 5. Analyzing female 
+
+# Completing data frame for analysis
+
+female_df <- female_df %>%  ## Including key column for left join
+  mutate(observation = 1:n())
+
+female_df <- dplyr::left_join(female_df, gathered_courses_data_vf, by = "observation") ## Left joining information to complete data frame
+
+female_df[16, "Key"] <- "GRAD-C3H" # Differentiating GRAD-C3 keys (same course, different Professors)
+female_df[17, "Key"] <- "GRAD-C3P" # Differentiating GRAD-C3 keys (same course, different Professors)
+female_df[18, "Key"] <- "GRAD-C3W" # Differentiating GRAD-C3 keys (same course, different Professors)
+
+female_df <- female_df[-c(10,11), ] # Removing classes taught jointly by both male and female Professor
+
+# Plot comparing female % of readings for individual courses while identifying professors' gender
+readings_gender_plot <- ggplot(data = female_df, aes(x = reorder(Key, female_list), y = female_list, fill = Gender)) +
+  geom_col(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90),
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Female authors in required readings",
+       subtitle = "Filling according to \nProfessors' Gender",
+       x = "Mandatory Courses",
+       y = "Female authors in required readings (%)") +
+  scale_fill_manual(values = c("Female" = "#a52a2a", "Male" = "#2aa5a5")) +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  theme_minimal() +
+  theme(panel.grid.minor.x=element_blank(),
+           panel.grid.major.x=element_blank()) +
+  theme(axis.text.x = element_text(angle = 90))
+
+readings_gender_plot
+
+# Plot comparing female % of readings for individual courses while identifying professors' method
+readings_method_plot <- ggplot(data = female_df, aes(x = reorder(Key, female_list), y = female_list, fill = Method)) +
+  geom_col(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90),
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Female authors in required readings",
+       subtitle = "Filling according to \nProfessors' Method",
+       x = "Mandatory Courses",
+       y = "Female authors in required readings (%)") +
+  scale_fill_manual(values = c("Quali" = "#a0740a", "Quant" = "#0a36a0")) +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +
+  theme_minimal() +
+  theme(panel.grid.minor.x=element_blank(),
+           panel.grid.major.x=element_blank()) +
+  theme(axis.text.x = element_text(angle = 90))
+
+readings_method_plot 
+
+# Image combining gender and method plots (female author % in readings)
+comparison_female_plot <- grid.arrange(readings_gender_plot,
+                                     readings_method_plot,
+                                     ncol = 2, nrow = 1)
+
+# For printing these grid.arranges in a RMarkdown file it seems necessary to
+# save it as a file and then call such file
+# https://stackoverflow.com/questions/17059099/saving-grid-arrange-plot-to-file
+```
 
 ## Policy Recommendations 
-
-
 
