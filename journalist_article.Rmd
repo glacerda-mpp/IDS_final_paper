@@ -436,8 +436,6 @@ knitr::include_graphics("fifth.png")
 ```
  
 
-## What these findings tell us
-
 Our study highlights the current gaps that exist between the administrative plans and the experience of students in the classroom. The course syllabus is key in fostering diversity and inclusion, not as a trendy phrase, but rather as an actionable and measurable value. The first part of our analysis showed that there is no clear guidance on why there is a diversity statement on the syllabus. One of the flaws with this initiative from the administration is that it is poorly communicated in terms of purpose to the entire university community, including faculty and the student body. In addition to that, these statements became rather a simplistic symbol that does not translate in creating a more fair and comfortable environment for underrepresented students. The diversity statements also showed that there are vague and most worrying, some professors did not even include one - even though they are compulsory. 
 
 The second part of  our study also highlights striking numbers. To illustrate, the overall representation of first or sole female authors in required readings is 21% in all required first year courses. As a policy school, that is committed to minimize the gender gap, this number is disappointing. The low number of female shared on first or sole authorship tells us that some of the gender equity and equality strategies that the administration is implementing do not translate into the required readings of core courses. 
