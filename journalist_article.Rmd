@@ -1,18 +1,27 @@
 ---
-title: "Data Science Final Project"
+title: "Is Diversity and Inclusion Fostered on Professors' Syllabi?"
 author: "Rodrigo Bolaños, Eduardo Campbell and Guilherme Lacerda"
 output:
   html_document:
     theme: cerulean
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 
 pacman::p_load(rmdformats, tidyverse, stringr, pdftools, gender, ggplot2, quanteda.sentiment, quanteda, tidyr, gridExtra, tm, gender) #add here the libraries you are using
+library(quanteda)
+library(quanteda.sentiment)
+library(ggplot2)
+```
+
+```{r,fig.align='left', echo=F, out.width = "100%", fig.cap= "Image Credits: Hertie School diversity and inclusion website"}
+
+knitr::include_graphics("hertieDEI.jpg")
 ```
 
 
-```{r functions}
+
+```{r functions, echo=FALSE}
 #functions #this should be hidden
 
 
@@ -149,7 +158,7 @@ div_statement_df<-data.frame(unlist(list_syllabi),unlist(a))
 
 ```
 
-```{r getting-readings}
+```{r getting-readings, include=FALSE}
 
 ## Integrating diversity statement scrapping data frame to second data frame with courses' basic and readings information 
 
@@ -360,18 +369,30 @@ In the last couple of years, the Hertie School publicly expressed its commitment
 
 Even though issues related to racism are far from being solved at the university, the Hertie School has made clear efforts on other areas of diversity and inclusion. To ameliorate gender gaps in higher education, the faculty body pledged to not to participate in “men-only” panels; and a commitment to host more inclusive events at the Hertie School. Moreover, there is a strategy to recruit more women in faculty, and soon the university will officially appoint its first female president Dr. Cornelia Woll. 
 
-As noted, the Hertie School is committed to improve its diversity and inclusion strategy, especially regarding gender equality and equity. Nevertheless, these commitments seem to be mostly administrative and little is known about the outcomes of such efforts on the student body. Consequently, a core course audit was conducted by three Master’s of Public Policy students in order to figure out some diversity and inclusion indicators on the course syllabi. 
+As noted, the Hertie School is committed to improve its diversity and inclusion strategy, especially regarding gender equality and equity. Nevertheless, these commitments seem to be mostly administrative and little is known about the outcomes of such efforts on the student body. Consequently, we, three Master’s of Public Policy students, conducted a course audit in order to figure out some diversity and inclusion indicators on the course syllabi. 
 
-The main question that these students aimed to explore on the course audit was: how is diversity and inclusion fostered on the course syllabus? 
+The main question we aim to explore on the course audit was: how is diversity and inclusion fostered on the course syllabus? 
 
-
-## Methodology and Data Collection
 
 ## Motivation and Relevance 
 
-Diversity and inclusion is a phrase that has gained increasing popularity among the Hertie Administration and higher education institutions as a whole. However, it is often referred to as an abstract concept or value that ìs part of the university experience without clear metrics on how to increase, implement and strengthen policies that aim to foster such value. While it is true that the university leadership is committed to ameliorate the experiences of students regarding diversity and inclusion, there is often a disconnect if that commitment is translating to the daily lives of students at the university. For that reason, students conducted a research project to investigate how diversity and inclusion is cultivated and strengthened on the courses’ syllabi. 
+```{r, out.width= "50%", out.extra='style="float:right; padding:10px"'}
+
+knitr::include_graphics("dani.jpg")
+```
+
+
+Diversity and inclusion is a phrase that has gained increasing popularity among the Hertie Administration and higher education institutions as a whole. However, it is often referred to as an abstract concept or value that is part of the university experience without clear metrics on how to increase, implement and strengthen policies that aim to foster such value. While it is true that the university leadership is committed to ameliorate the experiences of students regarding diversity and inclusion, there is often a disconnect if that commitment is translating to the daily lives of students at the university. For that reason, students conducted a research project to investigate how diversity and inclusion is cultivated and strengthened on the courses’ syllabi. 
 
 While diversity and inclusion has become a trendy topic among several organizations, its importance is crucial when training policy makers. Hertie as a policy school must guarantee an integral training in policy making, meaning that it should actively promote an intersectional diversity and inclusion approach to its teaching curricula. 
+
+## Methodology and Data Collection
+
+We selected the course syllabus of first year compulsory classes of fall and spring 2020-2021. This was identified by looking at the [course directory](https://mystudies.hertie-school.org/en/course-directory.php) provided by Hertie's administration website and selecting the core courses which are named "GRAD-C". After that, we created a data source with the gender and research method of the instructors per syllabus. However, we dropped the syllabus from classes that were taught by more than one professors who are not from the same gender. That was done in order to standardize our data set for the purpose of the analysis. The project was divided into two parts: 
+-Analyzing the diversity statements and identifying relationships between gender  and research method of the professor, statement length and type of words used
+-Looking at the authors of required readings, finding out the overall gender representation, and identifying relationships between gender representation of authors, gender of the instructor, and research method of the instructor.  
+
+
 
 ## Finding and Analysis
 
@@ -682,4 +703,6 @@ comparison_female_plot <- grid.arrange(readings_gender_plot,
 ```
 
 ## Policy Recommendations 
+
+## References
 
