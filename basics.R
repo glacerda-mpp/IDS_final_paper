@@ -143,7 +143,6 @@ working_directory<-getwd()
 list_syllabi<-list.files("./syllabi_pdfs")
 pdfs<-map(paste0(working_directory,"/syllabi_pdfs/",list_syllabi),pdf_text)
 a<-map(pdfs,read_div_statement)
-
 div_statement_df<-data.frame(unlist(list_syllabi),unlist(a))
 
 #b<-map(pdfs,get_readings)
@@ -173,10 +172,7 @@ get_readings(stats_munzert_pdf)
 
 
 #a<-str_extract_all(a,"(?>=Session)+(?=Required)")
-
-
 #x1<-"Tutorialspoint is the best resource for tutorials and courses"
-
 #str_extract_all(x1,"(?<=Tutorialspoint).+(?=courses)")
 
 

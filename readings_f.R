@@ -6,7 +6,6 @@ library(stringr)
 library(gender)
 
 
-
 #this should go first
 
 split_readings<-function(complete_df,no_c){ #1
@@ -32,8 +31,6 @@ split_readings<-function(complete_df,no_c){ #1
   split_readings_df
   
 } 
-
-
 
 split_names<-function(readings_l){
   
@@ -79,7 +76,6 @@ percentage_female<-function(reading_names) {
   }else{
    result<-0
     }
-  
   
   result
 }
