@@ -1,5 +1,5 @@
 ---
-title: "Is Diversity and Inclusion Fostered on Professors' Syllabi?"
+title: "21% of Women are Sole or First Authors in Required Readings"
 author: "Rodrigo Bolaños, Eduardo Campbell and Guilherme Lacerda"
 output:
   html_document:
@@ -18,6 +18,28 @@ library(ggplot2)
 
 knitr::include_graphics("hertieDEI.jpg")
 ```
+
+```{css}
+.container { width: 1000px; }
+h3 {
+  background-color: #D4DAEC;
+  text-indent: 100px; 
+}
+
+body {
+  background-color: ivory;
+}
+
+
+img [src ~="hertieDEI.jpg"] {
+   border: 1px solid black;
+}
+
+
+
+```
+
+
 
 
 
@@ -362,43 +384,56 @@ female_df<-data.frame(classes_1,female_list)
 
 ```
 
-## Executive Summary
-(200 words)
+### Authors and Contribution Statement 
+- Rodrigo Bolaños, [email](r.bolanos@mpp.hertie-school.org)
+- Eduardo Campbell, [email](e.campbell-bethancourt@mpp.hertie-school.org)
+- Guilherme Lacerda, [email](g.lacerda@mpp.hertie-school.org)
 
-## Introduction: 
-```{r, out.width= "50%", echo=F, out.extra='style="float:left; padding:10px"'}
+_All authors contributed equality to the report_
+
+
+### Executive Summary
+We conducted a research study to analyze the course syllabi of all compulsory readings for first-year students from the fall and spring semesters 2020-2021. Our study aimed to answer how diversity and inclusion is fostered on the course syllabi? To proceed, we first investigated the diversity statements where we found that qualitative professors wrote slightly longer statements on average than quantitative counterparts. Furthermore, we did not find any significant difference on diversity length and the gender of the instructor. We created three categories–representativeness and equity, practical experience, and freedom of speech–to find certain patterns on the dataset. Due to the small size of the data, we did not find any significant trends. The second part of our research looked at the overall female representation as first or sole author in all required readings. Our study showed that there is 21% of female representation as first or sole authors in required readings. Moreover, there was more representation of female sole or first authors in classes taught by qualitative professors than quantitative ones. 
+
+### Introduction: 
+```{r, out.width= "48%", echo=F, out.extra='style="float:left; padding:10px"'}
 
 knitr::include_graphics("dani.jpg")
 ```
 
-In the last couple of years, the Hertie School publicly expressed its commitment towards diversity and inclusion. This was exemplified by creation of the Diversity and Inclusion Task Force 2019 that aimed to identify general strategic objectives for the school, including definitions of equality, diversity and inclusion; identify action and issue-area specific goals; and recommend measures to achieve the goals identified. Despite these efforts, the university faced internal and external criticism and outrage sparked by an article posted by a professor that compared BLM protesters removing statues to barbarians. As a result, students expressed their discontent not only by the article published but also due to the lack of diversity and inclusion at the university. For example, in the picture to the left, _photo credits to Bloomberg_, there is Dannyelle Thompson who is a recent Hertie MPP alumna that vocally criticized issues on diversity and inclusion during an [interview](https://www.bloombergquint.com/onweb/berlin-spat-shows-lack-of-help-for-german-students-facing-racism) by Bloomberg.  According to her, Black students like herself risk finding themselves in hostile learning environments without official safeguards at Hertie. 
+In the last couple of years, the Hertie School publicly expressed its commitment towards diversity and inclusion. This was exemplified by the creation of the [Diversity and Inclusion Task Force 2019](https://hertieschool-f4e6.kxcdn.com/fileadmin/5_WhoWeAre/4_Facts_and_figures/Downloads/2019_Hertie_School_DI_Task_Force_Final_Results_Report.pdf) that aimed to identify general strategic objectives for the school, including the definitions of equality, diversity and inclusion; identifying action and issue-area specific goals; and recommending measures to achieve the goals identified. Despite these efforts, the university faced internal and external criticism and outrage sparked by an [article](https://www.opendemocracy.net/en/can-europe-make-it/world-war-statues/) posted by a professor that compared BLM protesters removing statues to barbarians. As a result, students expressed their discontent not only by the article published but also due to the lack of diversity and inclusion at the university. For example, in the picture to the left, _photo credits to Bloomberg_, there is Dannyelle Thompson who is a recent Hertie MPP alumna that vocally criticized issues on diversity and inclusion during an [interview](https://www.bloombergquint.com/onweb/berlin-spat-shows-lack-of-help-for-german-students-facing-racism) by Bloomberg.  According to her, Black students like herself risk finding themselves in hostile learning environments without official safeguards at Hertie. 
 
-Even though issues related to racism are far from being solved at the university, the Hertie School has made clear efforts on other areas of diversity and inclusion. To ameliorate gender gaps in higher education, the faculty body pledged to not to participate in “men-only” panels; and a commitment to host more inclusive events at the Hertie School. Moreover, there is a strategy to recruit more women in faculty, and soon the university will officially appoint its first female president Dr. Cornelia Woll. 
+Even though issues related to racism are far from being solved at the university, the Hertie School has made clear efforts on other areas of diversity and inclusion. To ameliorate gender gaps in higher education, the faculty body [pledged](https://www.hertie-school.org/en/diversity-inclusion) to not to participate in “men-only” panels; and agreed to host more inclusive events at the Hertie School. Moreover, there is a strategy to recruit more women in faculty and soon the university will officially appoint its first female president Dr. Cornelia Woll. 
 
 As noted, the Hertie School is committed to improve its diversity and inclusion strategy, especially regarding gender equality and equity. Nevertheless, these commitments seem to be mostly administrative and little is known about the outcomes of such efforts on the student body. Consequently, we, three Master’s of Public Policy students, conducted a course audit in order to figure out some diversity and inclusion indicators on the course syllabi. 
 
 The main question we aim to explore on the course audit is: __how is diversity and inclusion fostered on the course syllabus?__ 
 
 
-## Motivation and Relevance 
+### Motivation and Relevance 
 
 Diversity and inclusion is a phrase that has gained increasing popularity among the Hertie Administration and higher education institutions as a whole. However, it is often referred to as an abstract concept or value that is part of the university experience without clear metrics on how to increase, implement and strengthen policies that aim to foster such value. While it is true that the university leadership is committed to ameliorate the experiences of students regarding diversity and inclusion, there is often a disconnect if that commitment is translating to the daily lives of students at the university. For that reason, we conducted a research project to investigate how diversity and inclusion is cultivated and strengthened on the courses’ syllabi. 
 
 While diversity and inclusion has become a trendy topic among several organizations, its importance is crucial when training policy makers. Hertie as a policy school must guarantee an integral training in policy-making, meaning that it should actively promote an intersectional diversity and inclusion approach to its teaching curricula. 
 
-## Methodology and Data Collection
+### Methodology and Data Collection
 
-We selected the course syllabus of first year compulsory classes of fall and spring 2020-2021. This was identified by looking at the [course directory](https://mystudies.hertie-school.org/en/course-directory.php) provided by Hertie's administration website and selecting the core courses which are named "GRAD-C". After that, we created a data source with the gender and research method of the instructors per syllabus. However, we dropped the syllabus from classes that were taught by more than one professors who are not from the same gender. That was done in order to standardize our data set for the purpose of the analysis. The project was divided into two parts: 
+We selected the course syllabus of first-year compulsory classes of fall and spring 2020-2021. This was identified by looking at the [course directory](https://mystudies.hertie-school.org/en/course-directory.php) provided by Hertie administration website and selecting the core courses which are named "GRAD-C". After that, we created a data source with the gender and research method of the instructors per syllabus. However, we dropped the syllabus from classes that were taught by more than one professors who are not from the same gender. That was done in order to standardize our data set for the purpose of the analysis. The project was divided into two parts: 
 
 1. Analyzing the diversity statements and identifying relationships between gender  and research method of the professor, statement length and type of words used
+2. Looking at the authors of required readings, finding out the overall gender representation, and identifying relationships between gender representation of authors, gender of the instructor and research method of the instructor.  
 
-2. Looking at the authors of required readings, finding out the overall gender representation, and identifying relationships between gender representation of authors, gender of the instructor, and research method of the instructor.  
+In order to conduct the first part, we used tools from `quanteda` and  `quanteda.sentiment` packages to create a dictionary for three categories. 
 
-In order to conduct the first part, we used tools from `quanteda` and  `quanteda.sentiment` packages to create a dictionary for three categories. a) Representativeness and Equity, b) Practical Experience and c) Freedom of Speech. For the second part, we scrapped the authors of all required readings. Then selected only the sole author or first author of those readings. Finally we used the `gender`package to identify the gender of the authors. 
+a) Representativeness and Equity
+b) Practical Experience 
+c) Freedom of Speech
+
+For the second part, we scrapped the authors of all required readings. Then selected only the sole author or first author of those readings. Finally we used the `gender`package to identify the gender of the authors. 
 
 
 
-## Finding and Analysis
+### Finding and Analysis
 ```{r, out.width= "55%", echo=F, out.extra='style="float:right; padding:10px"'}
 
 knitr::include_graphics("first.png")
@@ -409,44 +444,71 @@ knitr::include_graphics("first.png")
 ```{r, out.width= "50%", echo=F, out.extra='style="float:left; padding:10px"'}
 knitr::include_graphics("second.png")
 ```
-  As previously mentioned, diversity statements are a compulsory syllabus requirement for instructors. Nevertheless, __Figure.4__ shows that 5 professors did not write their diversity statements. This brings an interesting question to us, are the diversity statement symbolic? It is fair to point out that in Germany professors have plenty of autonomy when designing their syllabus. In addition, our study shows that the administration does not have the ability to ensure the inclusion of this section on the courses syllabi. After interviewing members of the administration, we also realized that there is not a clear understanding of why the university wants to include a diversity statement on the syllabus. Thus, creating some confusion for the general university community in terms of the impact or goals wanted on the implementation of such policy. And most importantly, raising questions on the student body if the diversity statements are just a symbolic move. 
+As previously mentioned, diversity statements are a compulsory syllabus requirement for instructors. Nevertheless, __Figure.4__ shows that 5 professors did not write their diversity statements. This brings an interesting question to us, are the diversity statement symbolic? It is fair to point out that in Germany professors have plenty of autonomy when designing their syllabus. In addition, our study shows that the administration does not have the ability to ensure the inclusion of this section on the courses syllabi. After interviewing members of the administration, we also realized that there is not a clear understanding of why the university wants to include a diversity statement on the syllabus. Thus, creating some confusion for the general university community in terms of the impact or goals wanted on the implementation of such policy. And most importantly, raising questions on the student body if the diversity statements are just a symbolic move. 
  
- We further analyzed the statements by creating 3 categories of words (representativeness and equity; practical experience; and freedom of speech). If you would like to see the details of the analysis, it is open to the public on this [link](https://github.com/glacerda-mpp/IDS_final_paper). To illustrate, the dictionary for _freedom of speech__ included the following words: _speech, freedom,thought, debate, disagreement, agreement, respectful, respectfully._ The idea was to observe if professors were writing these diversity statements to a) provide a space where underrepresented students could thrive and also support students who might need extra support (representiveness and equity), b) as a tool to just protect themselves when being involves in scandals such as the article written by a Hertie professor on Black Lives Matter (freedom of speech), or c) as a superficial description of diversity based on travel experience or studying abroad (practical experience). We used these three dictionaries to see what was the type of words professors used on their statements. In __Figure.5__ we could see the share of words per course and whether it fit any of three categories we created. While the share of each document (x axis) is not extensive to due to size of the diversity statements, we still found interesting outcomes. For example, 5 courses have more than 10% share of words related to representativeness and equity. Moreover, it is also interesting to point out that while there are many courses focusing on freedom of speech, the share of words per syllabus is not very high. One of the outliers in this graph is _GRAD_C3P_ where there is almost 80% share of words related to practical experience. 
+We further analyzed the statements by creating 3 categories of words (representativeness and equity; practical experience; and freedom of speech). If you would like to see the details of the analysis, it is open to the public on this [link](https://github.com/glacerda-mpp/IDS_final_paper). To illustrate, the dictionary for _freedom of speech_ included the following words: _speech, freedom,thought, debate, disagreement, agreement, respectful, respectfully._ The idea was to observe if professors were writing these diversity statements to 
  
- One of the shortcomings with __Figure.5__ is that more words were needed on the diversity statements in order to find different sentiments and semantics to fill the categories we proposed. 
+ a) provide a space where underrepresented students could thrive and also support students who might need extra support (representiveness and equity); 
+ b) as a platform that focuses on the non-deniability of any arguments put forward in class, potentially serving as a protection for discriminatory claims (freedom of speech) or;
+ c) as a superficial description of diversity based on travel experience or studying abroad (practical experience). 
+ 
+We used these three dictionaries to see what was the type of words professors used on their statements. In __Figure.5__ we could see the share of words per course and whether it fits any of three categories we created. While the share of each document (x axis) is not extensive to due to size of the diversity statements, we wanted to showcase some of the findings. For example, 5 courses have more than include only 1% share of words related to representativeness and equity. Thus, raising further doubts on the purpose that these statements aimed to fulfill. Moreover, it is also interesting to point out that while there are many courses focusing on freedom of speech, the share of words per syllabus is not very high. One of the outliers in this graph is _GRAD_C3P_ where there is almost 8% share of words related to practical experience. 
+ 
+One of the shortcomings with __Figure.5__ is that more words were needed on the diversity statements in order to find different sentiments and semantics to fill the categories we proposed. 
 
 ```{r,fig.align='center', echo=F, out.width = "60%"}
 knitr::include_graphics("third.png")
 
 ```
 
-The second part of the study analyzed the gender representation on authorship in all the required readings. We decided on first authors or sole authors from required readings because sole authors or first authors are most likely to be remembered and cited. Furthermore, we also only considered the assigned readings because they are mostly read in comparison to optional readings and they also promote academic scholarship and influence workforce diversity.
+The second part of the study analyzed the gender representation on authorship in all the required readings. We decided on first authors or sole authors from required readings because sole authors or first authors are most likely to be remembered and cited. Furthermore, we only considered the assigned readings because they are most often read in comparison to optional readings. Required readings also promote academic scholarship and influence workforce diversity.
 
 
 ```{r, out.width= "60%", echo=F, out.extra='style="float:right; padding:10px"'}
 knitr::include_graphics("fourth.png")
 ```
-__Figure.6__ shows the distribution of first or sole female authors per required course. The graph also shows the gender of the instructor to see if there is any type of relationship. It is important to mention that the __overall representation of first or sole female authorship among the 20 courses studied is 21%__. This number further exemplifies the gender gap faced by female scholars but also that the measurements implemented by the Hertie administration are not translating well to academic experience of students. On __Figure.6__ one can see the only two professors have more than 50% female representation as first or sole authors. We do not see any trend between gender of instructors and female authorship; interestingly one male professor, _GRAD-C1-1103_ has the highest representation of first or sole women authorship with 70%. One the other hand, we also see 4 courses with 0% of women as first or sole authors.
+__Figure.6__ shows the distribution of first or sole female authors per required course. The graph also shows the gender of the instructor to see if there is any type of relationship. It is essential to mention that the __overall representation of first or sole female authorship among the 20 courses studied is 21%__. This number further exemplifies the gender gap faced by female scholars but also that the measurements implemented by the Hertie administration are not translating well to academic experience of students. On __Figure.6__ one can see that only two professors have more than 50% female representation as first or sole authors. We do not see any trend between gender of instructors and female authorship; interestingly one male professor, _GRAD-C1-1103_ has the highest representation of first or sole women authorship with 70%. On the other hand, we also see 4 courses with 0% of women as first or sole authors.
 
-Last but not least, __Figure.7__ shows the share of first or sole female authorship depending on the research method of the instructors. As noted, the professors with a qualitative research background show more representation of female as first or sole authors. On the other hand, quantitative professors have the least share of female representation; the quantitative professor with the highest female sole or first authorship percentage is less than 10%.
+Last but not least, __Figure.7__ shows the share of first or sole female authorship depending on the research method of the instructor. As noted, the professors with a qualitative research background show more representation of female as first or sole authors. In contrast, quantitative professors have the least share of female representation; the quantitative professor with the highest female sole or first authorship percentage is less than 10%. One potential reason for the difference we find between quali and quanti female authorship might be explained by textbooks in these areas being from male authors. So while there is an issue at Hertie, our research highlights an structural and systemic issue in academia as a whole. 
 
-```{r, fig.align='center', echo=F, out.width = "50%"}
+```{r, fig.align='center', echo=F, out.width = "60%"}
 
 knitr::include_graphics("fifth.png")
 ```
  
 
-Our study highlights the current gaps that exist between the administrative plans and the experience of students in the classroom. The course syllabus is key in fostering diversity and inclusion, not as a trendy phrase, but rather as an actionable and measurable value. The first part of our analysis showed that there is no clear guidance on why there is a diversity statement on the syllabus. One of the flaws with this initiative from the administration is that it is poorly communicated in terms of purpose to the entire university community, including faculty and the student body. In addition to that, these statements became rather a simplistic symbol that does not translate in creating a more fair and comfortable environment for underrepresented students. The diversity statements also showed that there are vague and most worrying, some professors did not even include one - even though they are compulsory. 
+Our study highlights the current gaps that exist between the administrative plans and the experience of students in the classroom. The course syllabus is key in fostering diversity and inclusion, not as a trendy phrase, but rather as an actionable and measurable value. The first part of our analysis showed that there is no clear guidance on why there is a diversity statement on the syllabus. One of the flaws with this initiative from the administration is that it is poorly communicated in terms of purpose to the entire university community, including faculty and the student body. In addition to that, these statements became rather a simplistic symbol that does not translate in creating a more fair and comfortable environment for underrepresented students. The diversity statements also showed that they are vague. The most worrying aspect on diversity statements is that some professors did not even include one - even though they are compulsory. 
 
-The second part of  our study also highlights striking numbers. To illustrate, the overall representation of first or sole female authors in required readings is 21% in all required first year courses. As a policy school, that is committed to minimize the gender gap, this number is disappointing. The low number of female shared on first or sole authorship tells us that some of the gender equity and equality strategies that the administration is implementing do not translate into the required readings of core courses. 
+The second part of  our study also highlights striking numbers. To illustrate, the overall representation of first or sole female authors in required readings is 21%. As a policy school, that is committed to minimize the gender gap, this number is disappointing. The low number of female shared on first or sole authorship tells us that some of the gender equity and equality strategies that the administration is implementing do not translate into the required readings of core courses. 
+
+### Shortcomings
+
+The results of the analysis above should be considered in the light of some methodological and technical shortcomings.  
+
+- First, due to the lack of standardization in the way the syllabi are organized it was only possible to scrap the diversity statements and not the readings.  To analyse the latter, we built an external machine-readable database in which we added all the required readings for all the courses. 
+
+- Second, to guarantee that our algorithm could identify the gender we transformed all citations to MLA style with full name and last name. However, we focused only on formatting the first author of every reading. A further and more precise analysis should consider all of them. 
+
+- Third, the identification of the type of words the diversity statements used relies on a narrow dictionary made by ourselves. A broader and more specialized use of words would have been ideal to engage on this task, nonetheless it was not possible due to time limitations. 
+
 
 ### Policy Recommendations
 
 * Even though we criticized the way that the diversity statements are currently used, we believe that it is an important tool for actual change. Thus, a clearer vision and purpose from the administration must be developed in order to communicate effectively to instructors _why there is a need for a diversity statement_. 
 
-* We believe that course audits should happen by third parties in order to see where the university stands in terms of gender representation and other categories from the course readings. Course audits should be taken as a descriptive tool rather than a normative one. 
+* We believe that course audits should happen by third parties in order to see where the university stands in terms of gender representation and other categories from the course readings such as global origin. Course audits should be taken as a descriptive tool rather than a normative one. 
 
-## References
+* We suggest that the Hertie School works on standardizing the syllabi and in publishing them in machine-readable formats. This would allow students and other members of the university to conduct similar analysis to the one we did at least on a semester-basis cycle. 
+
+
+### References
+
+- [Diversity and Inclusion Task Force 2019 Report](https://hertieschool-f4e6.kxcdn.com/fileadmin/5_WhoWeAre/4_Facts_and_figures/Downloads/2019_Hertie_School_DI_Task_Force_Final_Results_Report.pdf)
+- [The World War on Statues](https://www.opendemocracy.net/en/can-europe-make-it/world-war-statues/)
+- [Berlin Spat Shows German Students Facing Racism Lack Support](https://www.bloombergquint.com/onweb/berlin-spat-shows-lack-of-help-for-german-students-facing-racism)
+- [Hertie No-Only-Male Panel Pledge](https://www.hertie-school.org/en/diversity-inclusion)
+- [Hertie Course Directory](https://mystudies.hertie-school.org/?loginReferrer=%2Fen%2Fcourse-directory.php)
+- [GitHub Repository of This Study](https://github.com/glacerda-mpp/IDS_final_paper)
 
 
 
@@ -738,7 +800,7 @@ readings_method_plot <- ggplot(data = female_df, aes(x = reorder(Key, female_lis
   theme(axis.text.x = element_text(angle = 90),
         plot.subtitle = element_text(hjust = 0.5),
         plot.title = element_text(hjust = 0.5)) +
-  labs(title = "Figure.7 First or SoleFemale authors in required readings",
+  labs(title = "Figure.7 First or Sole Female Authors in Required Readings",
        subtitle = "Filling according to \nProfessors' Method",
        x = "Mandatory Courses",
        y = "First or Sole Female authors in required readings (%)") +
